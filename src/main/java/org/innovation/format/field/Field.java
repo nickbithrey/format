@@ -8,36 +8,25 @@ package org.innovation.format.field;
  *
  * @param <T>
  */
-public interface Field<T extends Object> {
+public interface Field {
 
     String getName();
 
     /**
-     * should not be used to retrieve the value from the field. should use
-     * {@link FieldFormatUtil#readField(Field)} instead
-     *
-     * @return
-     */
-    T getValue();
-
-    void setValue(T value);
-
-    /**
-     * @return whether the field has been read and processed. If so then {@link #getValue()} is used
-     *         to retrieve the value
-     */
-    boolean isRead();
-
-    /**
      * @return the raw byte array for the field
      */
-    byte[] getRawValue();
-
-    void setRawValue(byte[] value);
+    byte[] getValue();
 
     /**
      * @return the formatter for the given field
      */
-    FieldFormat<T> getFormatter();
+    FieldFormat getFormatter();
+
+    /**
+     * set the value on the field
+     * 
+     * @param value
+     */
+    void setValue(byte[] value);
 
 }

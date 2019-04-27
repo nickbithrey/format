@@ -35,7 +35,7 @@ public class FileFormatTest {
         String[] recordsStr = StringUtils.split(fullContents, "\n");
 
         DelimitedRecordConfiguration config = new DelimitedRecordConfiguration(",".getBytes());
-        Set<FieldConfiguration<? extends Field<?>>> fields = new HashSet<>();
+        Set<FieldConfiguration> fields = new HashSet<>();
         fields.add(new StringFieldConfiguration(1, "field1"));
         fields.add(new StringFieldConfiguration(2, "field2"));
         DecimalFieldConfiguration dfConfig = new DecimalFieldConfiguration(3, "field3");
@@ -52,8 +52,8 @@ public class FileFormatTest {
             records.add(new DelimitedRecordFormatUtil().readRecord(recordStr.getBytes(), config));
         }
 
-        List<Set<Field<?>>> recordsFields = records.stream().map(Record::getFields).collect(Collectors.toList());
-        recordsFields.stream().map(fs -> fs.stream().collect(Collectors.toMap(Field::getName, Field::getRawValue)))
+        List<Set<Field>> recordsFields = records.stream().map(Record::getFields).collect(Collectors.toList());
+        recordsFields.stream().map(fs -> fs.stream().collect(Collectors.toMap(Field::getName, Field::getValue)))
                 .collect(Collectors.toList());
         assertThat(recordsFields).as("read records").hasSize(5);
     }

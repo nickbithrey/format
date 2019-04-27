@@ -13,10 +13,11 @@ import java.util.Set;
 
 import org.assertj.core.util.Files;
 import org.innovation.format.Format;
-import org.innovation.format.field.Field;
+import org.innovation.format.field.BaseField;
 import org.innovation.format.field.FieldConfiguration;
+import org.innovation.format.field.FieldFormatUtil;
 import org.innovation.format.field.string.StringFieldConfiguration;
-import org.innovation.format.field.string.StringFieldObj;
+import org.innovation.format.field.string.StringFieldFormat;
 import org.innovation.format.record.Record;
 import org.innovation.format.record.delimited.DelimitedRecordConfiguration;
 import org.innovation.format.record.delimited.DelimitedRecordFormatUtil;
@@ -103,24 +104,24 @@ public class DelimitedFileExampleTest {
 
     private Record createRecord(String field1Val, String field2Val, String field3Val) {
         Record record = new Record();
-        StringFieldObj field1 = new StringFieldObj("FIELD1");
-        field1.setRawValue(field1Val.getBytes());
+        BaseField field1 = new BaseField("FIELD1", new StringFieldFormat());
+        FieldFormatUtil.writeField(field1, field1Val);
         record.addField(field1);
-        StringFieldObj field2 = new StringFieldObj("FIELD2");
-        field2.setRawValue(field2Val.getBytes());
+        BaseField field2 = new BaseField("FIELD2", new StringFieldFormat());
+        FieldFormatUtil.writeField(field2, field2Val);
         record.addField(field2);
-        StringFieldObj field3 = new StringFieldObj("FIELD3");
-        field3.setRawValue(field3Val.getBytes());
+        BaseField field3 = new BaseField("FIELD3", new StringFieldFormat());
+        FieldFormatUtil.writeField(field3, field3Val);
         record.addField(field3);
         return record;
     }
 
     private DelimitedRecordConfiguration buildRecordConfiguration(String delimiter) {
         DelimitedRecordConfiguration config = new DelimitedRecordConfiguration(delimiter.getBytes());
-        FieldConfiguration<StringFieldObj> field1 = new StringFieldConfiguration(1, "FIELD1");
-        FieldConfiguration<StringFieldObj> field2 = new StringFieldConfiguration(2, "FIELD2");
-        FieldConfiguration<StringFieldObj> field3 = new StringFieldConfiguration(3, "FIELD3");
-        Set<FieldConfiguration<? extends Field<?>>> fields = new HashSet<>();
+        FieldConfiguration field1 = new StringFieldConfiguration(1, "FIELD1");
+        FieldConfiguration field2 = new StringFieldConfiguration(2, "FIELD2");
+        FieldConfiguration field3 = new StringFieldConfiguration(3, "FIELD3");
+        Set<FieldConfiguration> fields = new HashSet<>();
         fields.add(field1);
         fields.add(field2);
         fields.add(field3);

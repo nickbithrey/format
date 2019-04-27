@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.innovation.format.field.Field;
 import org.innovation.format.field.FieldConfiguration;
-import org.innovation.format.field.FieldFormatUtil;
 import org.innovation.format.record.Record;
 
 class DelimitedRecordWriteUtil {
@@ -17,13 +16,12 @@ class DelimitedRecordWriteUtil {
     static byte[] writeRecord(Record record, DelimitedRecordConfiguration configuration) throws IOException {
         int count = 0;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            for (FieldConfiguration<?> fieldConfiguration : configuration.getFields().stream().sorted()
+            for (FieldConfiguration fieldConfiguration : configuration.getFields().stream().sorted()
                     .collect(Collectors.toList())) {
-                Field<?> field = record.getFields().stream()
-                        .filter(f -> f.getName().equals(fieldConfiguration.getName())).findFirst()
-                        .orElseThrow(() -> new IllegalStateException(
+                Field field = record.getFields().stream().filter(f -> f.getName().equals(fieldConfiguration.getName()))
+                        .findFirst().orElseThrow(() -> new IllegalStateException(
                                 String.format("cannot find field with name %s", fieldConfiguration.getName())));
-                byte[] recordBytes = FieldFormatUtil.writeField(field);
+                byte[] recordBytes = field.getValue();
                 baos.write(recordBytes);
 
                 if (++count != record.getFields().size()) {

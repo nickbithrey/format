@@ -1,17 +1,18 @@
 package org.innovation.format.field.number.decimal;
 
 import org.innovation.format.field.BaseFieldConfiguration;
+import org.innovation.format.field.Field;
 
-public class DecimalFieldConfiguration extends BaseFieldConfiguration<DecimalFieldObj> {
+public class DecimalFieldConfiguration extends BaseFieldConfiguration {
 
     private String format;
 
     public DecimalFieldConfiguration(long number, String name) {
-        super(number, name);
+        super(number, name, Double.class);
     }
 
     @Override
-    public DecimalFieldObj buildField(String name) {
+    public Field buildField(String name) {
         return DecimalFieldBuilder.buildField(name, format);
     }
 

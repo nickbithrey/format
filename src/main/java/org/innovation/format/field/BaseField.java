@@ -1,18 +1,19 @@
 package org.innovation.format.field;
 
-public abstract class BaseField<T> implements Field<T> {
+import java.util.Arrays;
+
+public class BaseField implements Field {
 
     private final String name;
 
-    private T value;
+    private final FieldFormat formatter;
 
-    private byte[] rawValue;
+    private byte[] value;
 
-    private boolean read;
-
-    public BaseField(String name) {
+    public BaseField(String name, FieldFormat formatter) {
         super();
         this.name = name;
+        this.formatter = formatter;
     }
 
     @Override
@@ -21,29 +22,23 @@ public abstract class BaseField<T> implements Field<T> {
     }
 
     @Override
-    public T getValue() {
+    public FieldFormat getFormatter() {
+        return formatter;
+    }
+
+    @Override
+    public byte[] getValue() {
         return value;
     }
 
     @Override
-    public void setValue(T value) {
+    public void setValue(byte[] value) {
         this.value = value;
-        this.read = true;
     }
 
     @Override
-    public boolean isRead() {
-        return read;
-    }
-
-    @Override
-    public byte[] getRawValue() {
-        return rawValue;
-    }
-
-    @Override
-    public void setRawValue(byte[] rawValue) {
-        this.rawValue = rawValue;
+    public String toString() {
+        return String.format("BaseField [name=%s, formatter=%s, value=%s]", name, formatter, Arrays.toString(value));
     }
 
 }

@@ -3,16 +3,16 @@ package org.innovation.format.record.fixedwidth;
 import org.innovation.format.field.Field;
 import org.innovation.format.field.FieldConfiguration;
 
-public class FixedWidthFieldConfiguration<T extends Field<?>> implements FieldConfiguration<T> {
+public class FixedWidthFieldConfiguration implements FieldConfiguration {
 
     private final long length;
 
-    private final FieldConfiguration<? extends T> field;
+    private final FieldConfiguration fieldConfiguration;
 
-    public FixedWidthFieldConfiguration(long length, FieldConfiguration<? extends T> field) {
+    public FixedWidthFieldConfiguration(long length, FieldConfiguration fieldConfiguration) {
         super();
         this.length = length;
-        this.field = field;
+        this.fieldConfiguration = fieldConfiguration;
     }
 
     public long getLength() {
@@ -21,17 +21,22 @@ public class FixedWidthFieldConfiguration<T extends Field<?>> implements FieldCo
 
     @Override
     public long getNumber() {
-        return field.getNumber();
+        return fieldConfiguration.getNumber();
     }
 
     @Override
     public String getName() {
-        return field.getName();
+        return fieldConfiguration.getName();
     }
 
     @Override
-    public T buildField(String name) {
-        return field.buildField(name);
+    public Class<?> getType() {
+        return fieldConfiguration.getType();
+    }
+
+    @Override
+    public Field buildField(String name) {
+        return fieldConfiguration.buildField(name);
     }
 
 }

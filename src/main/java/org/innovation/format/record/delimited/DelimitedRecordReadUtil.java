@@ -39,9 +39,9 @@ class DelimitedRecordReadUtil {
         return record;
     }
 
-    private static Field<?> getField(ByteArrayOutputStream baos, DelimitedRecordConfiguration configuration,
+    private static Field getField(ByteArrayOutputStream baos, DelimitedRecordConfiguration configuration,
             int currentParseNumber, int bytesToRemove) {
-        FieldConfiguration<? extends Field<?>> fieldConfiguration = configuration.getFields().stream()
+        FieldConfiguration fieldConfiguration = configuration.getFields().stream()
                 .filter(f -> isFieldNumber(currentParseNumber, f)).findFirst()
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("too many fields in record (%s) compared to configuration (%s)",
@@ -49,17 +49,17 @@ class DelimitedRecordReadUtil {
         return readCurrentBytes(baos, bytesToRemove, fieldConfiguration);
     }
 
-    private static boolean isFieldNumber(int currentParseNumber, FieldConfiguration<? extends Field<?>> f) {
+    private static boolean isFieldNumber(int currentParseNumber, FieldConfiguration f) {
         return f.getNumber() == currentParseNumber;
     }
 
-    private static Field<?> readCurrentBytes(ByteArrayOutputStream baos, int delimiter,
-            FieldConfiguration<? extends Field<?>> fieldConfiguration) {
+    private static Field readCurrentBytes(ByteArrayOutputStream baos, int delimiter,
+            FieldConfiguration fieldConfiguration) {
         byte[] bytes = baos.toByteArray();
         byte[] result = Arrays.copyOfRange(bytes, 0, bytes.length - delimiter);
 
-        Field<?> field = fieldConfiguration.buildField(fieldConfiguration.getName());
-        field.setRawValue(result);
+        Field field = fieldConfiguration.buildField(fieldConfiguration.getName());
+        field.setValue(result);
 
         return field;
     }

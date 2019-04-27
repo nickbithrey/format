@@ -6,19 +6,20 @@ import org.innovation.format.field.number.NumberFieldFormat;
 
 /**
  * read and write an Integer field into an {@link Integer}
- * 
+ *
  * @author nick.bithrey
  *
  */
-public class IntegerFieldFormat extends NumberFieldFormat<Long> {
+public class IntegerFieldFormat extends NumberFieldFormat {
 
     public IntegerFieldFormat(String pattern) {
         super(pattern);
         format.setParseIntegerOnly(true);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Long readInner(String value) throws ParseException {
-        return parseValue(value).longValue();
+    public <T extends Object> T readInner(String value) throws ParseException {
+        return (T) Long.valueOf(parseValue(value).longValue());
     }
 }

@@ -9,15 +9,14 @@ public final class FieldFormatUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FieldFormatUtil.class);
 
-    public static <T> T readField(Field<T> field) throws ParseException {
-        if (field.isRead()) {
-            T fieldValue = field.getValue();
-            LOGGER.trace("Reading previously read field value {} for field {}", fieldValue, field);
-            return fieldValue;
-        }
-        FieldFormat<T> fieldFormat = field.getFormatter();
+    private FieldFormatUtil() {
+
+    }
+
+    public static <T> T readField(Field field, Class<T> clazz) throws ParseException {
+        FieldFormat fieldFormat = field.getFormatter();
         try {
-            T value = fieldFormat.read(field.getRawValue());
+            T value = fieldFormat.read(field.getValue(), clazz);
             LOGGER.trace("Read field {} as {}", field, value);
             return value;
         } catch (ParseException e) {
@@ -26,13 +25,7 @@ public final class FieldFormatUtil {
         }
     }
 
-    public static <T> byte[] writeField(Field<T> field) {
-        if (!field.isRead()) {
-            return field.getRawValue();
-        }
-        FieldFormat<T> fieldFormat = field.getFormatter();
-        byte[] value = fieldFormat.write(field.getValue());
-        LOGGER.trace("Formatted {} into {} using formatter {}", field.getValue(), value, fieldFormat);
-        return value;
+    public static <T> void writeField(Field field, T value) {
+        field.setValue(field.getFormatter().write(value));
     }
 }

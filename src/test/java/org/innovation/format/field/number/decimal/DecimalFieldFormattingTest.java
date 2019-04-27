@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.text.ParseException;
 
-import org.innovation.format.field.number.decimal.DecimalFieldFormat;
 import org.junit.Test;
 
 public class DecimalFieldFormattingTest {
@@ -14,7 +13,7 @@ public class DecimalFieldFormattingTest {
     public void testParsingDecimal() throws ParseException {
         DecimalFieldFormat format = new DecimalFieldFormat("###.##");
         Double value = 132.32;
-        double parsedValue = format.read(value.toString().getBytes());
+        double parsedValue = format.read(value.toString().getBytes(), Double.class);
         assertThat(parsedValue).as("value parsed from %s for value %s", format.getClass().getSimpleName(), value)
                 .isEqualTo(value);
     }
@@ -23,7 +22,7 @@ public class DecimalFieldFormattingTest {
     public void testParsingLongFailThrowsException() {
         DecimalFieldFormat format = new DecimalFieldFormat("abc");
         Double value = 132.32;
-        Throwable thrown = catchThrowable(() -> format.read(value.toString().getBytes()));
+        Throwable thrown = catchThrowable(() -> format.read(value.toString().getBytes(), Double.class));
         assertThat(thrown).as("thrown exception when failing to parse field %s", value)
                 .isInstanceOf(ParseException.class).hasMessage("Unparseable number: \"%s\"", value.toString());
     }

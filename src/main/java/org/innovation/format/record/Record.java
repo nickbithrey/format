@@ -7,13 +7,13 @@ import org.innovation.format.field.Field;
 
 public class Record {
 
-    private final Set<Field<? extends Object>> fields = new HashSet<>();
+    private final Set<Field> fields = new HashSet<>();
 
-    public Set<Field<? extends Object>> getFields() {
+    public Set<Field> getFields() {
         return fields;
     }
 
-    public <T extends Object> boolean addField(Field<T> field) {
+    public boolean addField(Field field) {
         return fields.add(field);
     }
 

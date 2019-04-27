@@ -18,7 +18,7 @@ class FixedWidthRecordReadUtil {
         }
         Record record = new Record();
 
-        FixedWidthFieldConfiguration<? extends Field<?>> fixedWidthField = getNextField(configuration, 1);
+        FixedWidthFieldConfiguration fixedWidthField = getNextField(configuration, 1);
         int count = 0;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             for (byte b : recordBytes) {
@@ -39,28 +39,26 @@ class FixedWidthRecordReadUtil {
         return record;
     }
 
-    private static FixedWidthFieldConfiguration<? extends Field<?>> getNextField(
-            FixedWidthRecordConfiguration configuration, int fieldNumber) {
-        FieldConfiguration<? extends Field<?>> field = configuration.getFields().stream()
-                .filter(f -> f.getNumber() == fieldNumber).findFirst()
-                .orElseThrow(() -> new IllegalStateException("no configuration fields set up"));
+    private static FixedWidthFieldConfiguration getNextField(FixedWidthRecordConfiguration configuration,
+            int fieldNumber) {
+        FieldConfiguration field = configuration.getFields().stream().filter(f -> f.getNumber() == fieldNumber)
+                .findFirst().orElseThrow(() -> new IllegalStateException("no configuration fields set up"));
         if (!FixedWidthFieldConfiguration.class.isAssignableFrom(field.getClass())) {
             throw new IllegalStateException(String.format(
                     "field %s not set up as fixed width field even though its a fixed width file", field.getName()));
         }
-        return (FixedWidthFieldConfiguration<? extends Field<?>>) field;
+        return (FixedWidthFieldConfiguration) field;
     }
 
-    private static Field<?> getField(ByteArrayOutputStream baos, FixedWidthFieldConfiguration<?> fieldConfiguration) {
+    private static Field getField(ByteArrayOutputStream baos, FixedWidthFieldConfiguration fieldConfiguration) {
         return readCurrentBytes(baos, fieldConfiguration);
     }
 
-    private static Field<?> readCurrentBytes(ByteArrayOutputStream baos,
-            FixedWidthFieldConfiguration<?> fieldConfiguration) {
+    private static Field readCurrentBytes(ByteArrayOutputStream baos, FixedWidthFieldConfiguration fieldConfiguration) {
         byte[] result = baos.toByteArray();
 
-        Field<?> field = fieldConfiguration.buildField(fieldConfiguration.getName());
-        field.setRawValue(result);
+        Field field = fieldConfiguration.buildField(fieldConfiguration.getName());
+        field.setValue(result);
 
         return field;
     }
