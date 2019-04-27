@@ -1,3 +1,0 @@
-fixedwidthfile 
- with someextra
-lines  put   in
