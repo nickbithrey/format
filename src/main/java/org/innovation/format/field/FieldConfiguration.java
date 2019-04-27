@@ -7,7 +7,7 @@ package org.innovation.format.field;
  *
  * @param <T>
  */
-public interface FieldConfiguration<T> extends Comparable<FieldConfiguration<T>> {
+public interface FieldConfiguration extends Comparable<FieldConfiguration> {
 
     /**
      * @return field number in record
@@ -19,16 +19,18 @@ public interface FieldConfiguration<T> extends Comparable<FieldConfiguration<T>>
      */
     String getName();
 
+    Class<?> getType();
+
     /**
      * builds the {@link Field} object from the configuration
      *
      * @param name
      * @return the {@link Field}
      */
-    T buildField(String name);
+    Field buildField(String name);
 
     @Override
-    default int compareTo(FieldConfiguration<T> o) {
+    default int compareTo(FieldConfiguration o) {
         return Long.valueOf(getNumber()).compareTo(Long.valueOf(o.getNumber()));
     }
 

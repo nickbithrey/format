@@ -1,17 +1,20 @@
 package org.innovation.format.field.date;
 
-import org.innovation.format.field.BaseFieldConfiguration;
+import java.util.Date;
 
-public class DateFieldConfiguration extends BaseFieldConfiguration<DateFieldObj> {
+import org.innovation.format.field.BaseFieldConfiguration;
+import org.innovation.format.field.Field;
+
+public class DateFieldConfiguration extends BaseFieldConfiguration {
 
     private String format;
 
     public DateFieldConfiguration(long number, String name) {
-        super(number, name);
+        super(number, name, Date.class);
     }
 
     @Override
-    public DateFieldObj buildField(String name) {
+    public Field buildField(String name) {
         return DateFieldBuilder.buildField(name, format);
     }
 

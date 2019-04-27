@@ -9,7 +9,7 @@ import java.text.ParseException;
  *
  * @param <T>
  */
-public interface FieldFormat<T> {
+public interface FieldFormat {
 
     /**
      * reads the byte array into the desired java object of parameterised type
@@ -19,7 +19,7 @@ public interface FieldFormat<T> {
      * @throws ParseException
      *             if the formatter cannot parse the byte array into the object
      */
-    T read(byte[] value) throws ParseException;
+    <T extends Object> T read(byte[] value, Class<T> clazz) throws ParseException;
 
     /**
      * writes the parameterised type java object into a byte array to be written to an output stream
@@ -27,6 +27,6 @@ public interface FieldFormat<T> {
      * @param value
      * @return the byte array for the supplied java object
      */
-    byte[] write(T value);
+    <T extends Object> byte[] write(T value);
 
 }

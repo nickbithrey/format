@@ -6,6 +6,6 @@ import org.innovation.format.field.FieldConfiguration;
 
 public interface AccessorTypeRecordBuilder {
 
-    Set<FieldConfiguration<? extends org.innovation.format.field.Field<?>>> build(Class<?> clazz);
+    Set<FieldConfiguration> build(Class<?> clazz);
 
 }

@@ -12,11 +12,6 @@ public class InvalidFormatAnnotationException extends RuntimeException {
         super(formatMessage(annotatedElementType, elementName, validAnnotationClasses));
     }
 
-    public InvalidFormatAnnotationException(ElementType annotatedElementType, String elementName,
-            Collection<Class<?>> validAnnotationClasses, Throwable throwable) {
-        super(formatMessage(annotatedElementType, elementName, validAnnotationClasses), throwable);
-    }
-
     private static String formatMessage(ElementType annotatedElementType, String elementName,
             Collection<Class<?>> validAnnotationClasses) {
         return String.format("could not find any valid Format annotations on %s %s. One of %s expected",

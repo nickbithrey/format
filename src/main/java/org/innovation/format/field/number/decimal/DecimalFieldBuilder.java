@@ -1,12 +1,14 @@
 package org.innovation.format.field.number.decimal;
 
+import org.innovation.format.field.BaseField;
+
 public class DecimalFieldBuilder {
 
     private DecimalFieldBuilder() {
     }
 
-    public static DecimalFieldObj buildField(String name, String format) {
-        return new DecimalFieldObj(name, format);
+    public static BaseField buildField(String name, String format) {
+        return new BaseField(name, new DecimalFieldFormat(format));
     }
 
 }

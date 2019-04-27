@@ -3,7 +3,6 @@ package org.innovation.format.record;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
-import org.innovation.format.field.Field;
 import org.innovation.format.field.FieldConfiguration;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -22,7 +21,7 @@ public interface RecordConfigurationTypeBuilder<T extends RecordConfiguration, V
      * @param fields
      * @return the built {@link RecordConfiguration} using the supplied {@link FieldConfiguration}s
      */
-    T build(Annotation annotation, Set<FieldConfiguration<? extends Field<?>>> fields);
+    T build(Annotation annotation, Set<FieldConfiguration> fields);
 
     /**
      * @param clazz

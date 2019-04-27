@@ -9,7 +9,7 @@ import java.lang.annotation.Annotation;
  *
  * @param <T>
  */
-public interface FieldConfigurationBuilder<T extends FieldConfiguration<? extends Field<?>>> {
+public interface FieldConfigurationBuilder<T extends FieldConfiguration> {
 
     /**
      * builds the field configuration from the supplied annotation

@@ -1,15 +1,18 @@
 package org.innovation.format.field;
 
-public abstract class BaseFieldConfiguration<T> implements FieldConfiguration<T> {
+public abstract class BaseFieldConfiguration implements FieldConfiguration {
 
     private final long number;
 
     private final String name;
 
-    public BaseFieldConfiguration(long number, String name) {
+    private final Class<?> type;
+
+    public BaseFieldConfiguration(long number, String name, Class<?> type) {
         super();
         this.number = number;
         this.name = name;
+        this.type = type;
     }
 
     @Override
@@ -20,6 +23,11 @@ public abstract class BaseFieldConfiguration<T> implements FieldConfiguration<T>
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return type;
     }
 
 }

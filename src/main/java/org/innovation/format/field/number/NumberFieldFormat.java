@@ -15,7 +15,7 @@ import org.springframework.util.Assert;
  * @param <T>
  *            must extend a {@link Number}
  */
-public abstract class NumberFieldFormat<T extends Number> extends PreStringFormatFieldFormat<T> {
+public abstract class NumberFieldFormat extends PreStringFormatFieldFormat {
 
     protected final NumberFormat format;
 
@@ -30,7 +30,7 @@ public abstract class NumberFieldFormat<T extends Number> extends PreStringForma
     }
 
     @Override
-    public String writeInner(T value) {
+    public <T extends Object> String writeInner(T value) {
         return format.format(value);
     }
 

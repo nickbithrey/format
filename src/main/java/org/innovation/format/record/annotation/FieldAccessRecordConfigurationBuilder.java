@@ -21,7 +21,7 @@ public class FieldAccessRecordConfigurationBuilder implements AccessorTypeRecord
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FieldAccessRecordConfigurationBuilder.class);
 
-    private final Set<FieldConfigurationBuilder<? extends FieldConfiguration<? extends org.innovation.format.field.Field<?>>>> fieldBuilders = new HashSet<>();
+    private final Set<FieldConfigurationBuilder<? extends FieldConfiguration>> fieldBuilders = new HashSet<>();
 
     public FieldAccessRecordConfigurationBuilder() {
         fieldBuilders.add(new DateFieldConfigurationBuilder());
@@ -32,8 +32,8 @@ public class FieldAccessRecordConfigurationBuilder implements AccessorTypeRecord
     }
 
     @Override
-    public Set<FieldConfiguration<? extends org.innovation.format.field.Field<?>>> build(Class<?> clazz) {
-        Set<FieldConfiguration<? extends org.innovation.format.field.Field<?>>> fields = new HashSet<>();
+    public Set<FieldConfiguration> build(Class<?> clazz) {
+        Set<FieldConfiguration> fields = new HashSet<>();
         FormatFieldCallback fieldCallback = new FormatFieldCallback(fields);
         ReflectionUtils.doWithFields(clazz, fieldCallback, new FormatFieldFilter());
         return fields;
@@ -41,10 +41,9 @@ public class FieldAccessRecordConfigurationBuilder implements AccessorTypeRecord
 
     private class FormatFieldCallback implements FieldCallback {
 
-        private final Set<FieldConfiguration<? extends org.innovation.format.field.Field<?>>> fieldConfiguration;
+        private final Set<FieldConfiguration> fieldConfiguration;
 
-        public FormatFieldCallback(
-                Set<FieldConfiguration<? extends org.innovation.format.field.Field<?>>> fieldConfiguration) {
+        public FormatFieldCallback(Set<FieldConfiguration> fieldConfiguration) {
             super();
             this.fieldConfiguration = fieldConfiguration;
         }

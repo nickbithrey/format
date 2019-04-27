@@ -1,12 +1,14 @@
 package org.innovation.format.field.string;
 
+import org.innovation.format.field.BaseField;
+
 public class StringFieldBuilder {
 
     private StringFieldBuilder() {
     }
 
-    public static StringFieldObj buildField(String name) {
-        return new StringFieldObj(name);
+    public static BaseField buildField(String name) {
+        return new BaseField(name, new StringFieldFormat());
     }
 
 }

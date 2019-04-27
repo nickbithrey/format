@@ -3,7 +3,6 @@ package org.innovation.format.record.delimited;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
-import org.innovation.format.field.Field;
 import org.innovation.format.field.FieldConfiguration;
 import org.innovation.format.record.RecordConfigurationTypeBuilder;
 import org.slf4j.Logger;
@@ -18,8 +17,7 @@ public class DelimitedRecordConfigurationBuilder
     private static final Class<DelimitedRecord> BUILDER_ANNOTATION = DelimitedRecord.class;
 
     @Override
-    public DelimitedRecordConfiguration build(Annotation annotation,
-            Set<FieldConfiguration<? extends Field<?>>> fields) {
+    public DelimitedRecordConfiguration build(Annotation annotation, Set<FieldConfiguration> fields) {
         if (annotation instanceof DelimitedRecord) {
             return buildDelimitedRecord((DelimitedRecord) annotation, fields);
         }
@@ -27,7 +25,7 @@ public class DelimitedRecordConfigurationBuilder
     }
 
     private DelimitedRecordConfiguration buildDelimitedRecord(DelimitedRecord annotation,
-            Set<FieldConfiguration<? extends Field<?>>> fields) {
+            Set<FieldConfiguration> fields) {
         byte[] delimiterBytes = annotation.delimiterBytes();
         if (delimiterBytes.length == 0) {
             delimiterBytes = annotation.delimiter().getBytes();

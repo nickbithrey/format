@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.innovation.format.exception.InvalidFormatAnnotationException;
-import org.innovation.format.field.Field;
 import org.innovation.format.field.FieldConfiguration;
 import org.innovation.format.record.annotation.AccessorType;
 import org.innovation.format.record.annotation.AccessorTypeRecordBuilder;
@@ -44,7 +43,7 @@ public class RecordConfigurationBuilder {
                     Collections.singleton(FormatRecord.class));
         }
         AccessorType accessorType = formatRecord.accessorType();
-        Set<FieldConfiguration<? extends Field<?>>> fields = fieldBuilders.get(accessorType).build(clazz);
+        Set<FieldConfiguration> fields = fieldBuilders.get(accessorType).build(clazz);
         List<RecordBuilderWithAnnotation<?, ?>> buildersWithAnnotation = recordBuilders.stream()
                 .map(builder -> new RecordBuilderWithAnnotation<>(builder,
                         Optional.ofNullable(builder.findBuilderAnnotation(clazz))))

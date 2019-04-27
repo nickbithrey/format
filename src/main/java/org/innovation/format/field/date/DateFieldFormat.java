@@ -9,11 +9,11 @@ import org.innovation.format.field.PreStringFormatFieldFormat;
 
 /**
  * reading and writing a {@link Date} object
- * 
+ *
  * @author nick.bithrey
  *
  */
-public class DateFieldFormat extends PreStringFormatFieldFormat<Date> {
+public class DateFieldFormat extends PreStringFormatFieldFormat {
 
     private final ThreadLocal<DateFormat> format;
 
@@ -26,13 +26,14 @@ public class DateFieldFormat extends PreStringFormatFieldFormat<Date> {
         return format.get();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Date readInner(String value) throws ParseException {
-        return getFormat().parse(value);
+    public <T extends Object> T readInner(String value) throws ParseException {
+        return (T) getFormat().parse(value);
     }
 
     @Override
-    public String writeInner(Date value) {
+    public <T extends Object> String writeInner(T value) {
         return getFormat().format(value);
     }
 
